@@ -1,34 +1,50 @@
 
 from dash import Dash, dcc, html,dash_table
 from dash.dependencies import Input, Output
-from datetime import datetime
+import dash_bootstrap_components as dbc
+from datetime import datetime,timedelta
 from datetime import date
 from BetFikstur import Fikstür
 import pandas as pd
 
-s='2022-06-17'
-e='2022-06-18'
 
 
-df1 = Fikstür(s,e)
+presentday = datetime.today()
+yarın = presentday + timedelta(1)
 
-df = df1[['date','dateTime','league.country.name','league.name','stageName',
-'localTeam.name','visitorTeam.name','localTeamPosition','visitorTeamPosition',
-'prediction','bestOddProbability','predictionOddValue','localTeamScore',
-'visitorTeamScore','minute','timeStatus','odd1','oddx','odd2','odd1x',
-'odd12','oddx2','oddGoal','oddNoGoal','oddOver25','oddUnder25']]
 
-app = Dash(__name__)
+s=datetime.now().strftime('%Y-%m-%d')
+e=yarın.strftime('%Y-%m-%d')
+
+
+df = Fikstür(s,e)
+
+app = Dash( external_stylesheets=[dbc.themes.BOOTSTRAP],
+          meta_tags=[
+
+        {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+    ],)
 
 server = app.server
 
+
+
 app.layout = html.Div([
+
+
+
+
+
     dcc.DatePickerRange(
+
         id='my-date-picker-range',
         min_date_allowed=date(2015, 1, 1),
         max_date_allowed=date(2025, 1, 1),
-        initial_visible_month=datetime.today(),
-        end_date=datetime.today()
+        initial_visible_month=datetime.today().strftime("%Y-%m-%d"),
+        start_date=s,
+        end_date=e
+
+
     ),
  
      dash_table.DataTable(
@@ -41,14 +57,43 @@ app.layout = html.Div([
         sort_mode="single",         # sort across 'multi' or 'single' columns
         column_selectable="multi",  # allow users to select 'multi' or 'single' columns
         row_selectable="multi",     # allow users to select 'multi' or 'single' rows
-        row_deletable=True,         # choose if user can delete a row (True) or not (False)
         selected_columns=[],        # ids of columns that user selects
         selected_rows=[],           # indices of rows that user selects
         page_action="native",       # all data is passed to the table up-front or not ('none')
         page_current=0,             # page number that user is on
-        page_size=15,                # number of rows visible per page
+        page_size=100,
+
+        
+    
+      style_cell = {
+                'font_family': 'cursive',
+                'font_size': '14px',
+                'text_align': 'left'
+            },
+        
+            style_data={
+        'color': 'black',
+        'backgroundColor': 'white'
+    },
+    style_data_conditional=[
+        {
+            'if': {'row_index': 'odd'},
+            'backgroundColor': 'rgb(220, 220, 240)',
+        },
+
+        
+    ],
+    style_header={
+
+        'backgroundColor': 'rgb(210, 210, 210)',
+        'color': 'black',
+        'fontWeight': 'bold'
+    }
          
     )
+
+
+    
 ])
 
 
@@ -59,11 +104,14 @@ app.layout = html.Div([
     Input('my-date-picker-range', 'end_date'))
 
 def update_data(start_date, end_date):
-   
+
+
+    print(start_date,end_date)
+
     df = Fikstür(start_date,end_date)
 
     return df.to_dict('records')
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
