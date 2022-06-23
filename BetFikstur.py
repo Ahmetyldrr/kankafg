@@ -21,9 +21,7 @@ def Fikstür(date1,date2):
     headers["Accept-Language"] = "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6,zh;q=0.5"
     ek = 'T21:00:00Z'
 
-    print(date1+str(ek))
-    print(date2+str(ek))
-    
+
     params = {
 
         'dateFormat':'extended',

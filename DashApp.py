@@ -5,14 +5,10 @@ import dash_bootstrap_components as dbc
 from datetime import datetime,timedelta
 from datetime import date
 from BetFikstur import Fikstür
-import pandas as pd
-
 
 
 presentday = datetime.today()
 yarın = presentday + timedelta(1)
-
-
 s=datetime.now().strftime('%Y-%m-%d')
 e=yarın.strftime('%Y-%m-%d')
 
@@ -102,9 +98,6 @@ app.layout = html.Div([
     Input('my-date-picker-range', 'end_date'))
 
 def update_data(start_date, end_date):
-
-
-    print(start_date,end_date)
 
     df = Fikstür(start_date,end_date)
 
