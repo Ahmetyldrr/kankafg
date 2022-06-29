@@ -78,25 +78,31 @@ app.layout = html.Div([
         'fontWeight': 'bold'
     }
          
-    )
+    ),
+     
+    html.Button("Download Excel", id="btn_xlsx"),
+   
 
 
 
 ])
 
 
-
 @app.callback(
     Output('tbl', 'data'),
     Input('my-date-picker-range', 'start_date'),
-    Input('my-date-picker-range', 'end_date'))
+    Input('my-date-picker-range', 'end_date'),
+    Input("btn_xlsx", "n_clicks"),
+    
+    prevent_initial_call=True,)
 
-def update_data(start_date, end_date):
+def update_data(start_date, end_date,n_clicks):
 
     df = Fikstür(start_date,end_date)
-
+    
+    df.to_excel("GununMaclari.xlsx")
+    
     return df.to_dict('records')
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)
