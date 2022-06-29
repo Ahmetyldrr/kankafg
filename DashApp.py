@@ -55,7 +55,7 @@ app.layout = html.Div([
         
     
       style_cell = {
-                'font_size': '14px',
+                'font_size': '13px',
                 'text_align': 'left'
             },
         
@@ -66,7 +66,7 @@ app.layout = html.Div([
     style_data_conditional=[
         {
             'if': {'row_index': 'odd'},
-            'backgroundColor': 'rgb(220, 220, 240)',
+            'backgroundColor': 'rgb(220, 220, 230)',
         },
 
         
