@@ -55,7 +55,6 @@ app.layout = html.Div([
         
     
       style_cell = {
-                'font_family': 'cursive',
                 'font_size': '14px',
                 'text_align': 'left'
             },
