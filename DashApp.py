@@ -48,9 +48,8 @@ app.layout = html.Div([
         selected_columns=[],        # ids of columns that user selects
         selected_rows=[],           # indices of rows that user selects
         page_action="native",       # all data is passed to the table up-front or not ('none')
-        page_current=0,             # page number that user is on
-        page_size=100,
-
+                 # page number that user is on
+        
         
     
       style_cell = {
