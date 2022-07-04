@@ -7,9 +7,11 @@ from datetime import date
 from BetFikstur import Fikstür
 
 presentday = datetime.today()
-yarın = presentday + timedelta(1)
-s=datetime.now().strftime('%Y-%m-%d')
-e=yarın.strftime('%Y-%m-%d')
+dun = presentday - timedelta(1)
+e=datetime.now().strftime('%Y-%m-%d')
+s=dun.strftime('%Y-%m-%d')
+
+
 
 df = Fikstür(s,e)
 
