@@ -15,7 +15,10 @@ s=dun.strftime('%Y-%m-%d')
 
 df = Fikstür(s,e)
 
-app = Dash()
+app = Dash(
+    meta_tags=[
+        {"name": "viewport", "content": "width=device-width, initial-scale=0.3"}
+    ])
 
 server = app.server
 
