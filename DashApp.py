@@ -2,7 +2,7 @@
 from dash import Dash, dcc, html,dash_table
 from dash.dependencies import Input, Output
 from datetime import datetime,timedelta
-import dash_bootstrap_components as dbc
+
 from datetime import date
 from BetFikstur import Fikstür
 
@@ -13,10 +13,7 @@ e=yarın.strftime('%Y-%m-%d')
 
 df = Fikstür(s,e)
 
-app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],
-    meta_tags=[
-        {"name": "viewport", "content": "width=device-width, initial-scale=1"}
-    ],)
+app = Dash()
 
 server = app.server
 
