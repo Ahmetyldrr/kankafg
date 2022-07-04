@@ -2,19 +2,21 @@
 from dash import Dash, dcc, html,dash_table
 from dash.dependencies import Input, Output
 from datetime import datetime,timedelta
+import dash_bootstrap_components as dbc
 from datetime import date
 from BetFikstur import Fikstür
-
 
 presentday = datetime.today()
 yarın = presentday + timedelta(1)
 s=datetime.now().strftime('%Y-%m-%d')
 e=yarın.strftime('%Y-%m-%d')
 
-
 df = Fikstür(s,e)
 
-app = Dash()
+app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],
+    meta_tags=[
+        {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+    ],)
 
 server = app.server
 
@@ -91,12 +93,12 @@ app.layout = html.Div([
 @app.callback(
     Output('tbl', 'data'),
     Input('my-date-picker-range', 'start_date'),
-    Input('my-date-picker-range', 'end_date')
+    Input('my-date-picker-range', 'end_date'),
+    prevent_initial_call=True,
   
-
    )
 
-def update_data(start_date, end_date,n_clicks):
+def update_data(start_date, end_date):
 
     df = Fikstür(start_date,end_date)
     
